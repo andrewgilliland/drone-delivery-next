@@ -21,6 +21,8 @@ export default function Form() {
   function handleSubmit(e) {
     e.preventDefault();
     // 1. Check db to see if user exists
+    // MongoDB Atlas Search 1:02:47
+    
     // If user exists, display error message and exit
     // Else
 

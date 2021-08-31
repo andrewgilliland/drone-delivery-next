@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import Head from "next/head";
 import router, { useRouter } from "next/router";
 
@@ -10,24 +10,32 @@ import Button from "@/components/Button";
 export default function VerifyPage() {
   const { user, handleChangeUser } = useContext(DroneDeliveryContext);
 
+  useEffect(() => {
+    // If no user exists in context is empty, go back to home page
+    if (Object.keys(user).length === 0 || user.name === "") {
+      router.push("/");
+    }
+  }, []);
+
+  async function createUser(user) {
+    const data = await fetch(
+      `http://localhost:3000/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}`
+    );
+    const res = await data.json();
+    console.log(res);
+  }
+
   function verifiedSubmit(e) {
     e.preventDefault();
 
-    // Put data from context into db
-
+    // Put user data from context into db
+    createUser(user);
     // Redirect to the thanks page
     router.push("/thanks");
-    // Clear out context
-    // handleChangeUser({});
   }
 
   function unVerifiedSubmit(e) {
     e.preventDefault();
-    router.push("/");
-  }
-
-  // If no user exists in context is empty, go back to home page
-  if (Object.keys(user).length === 0 || user.name === "") {
     router.push("/");
   }
 

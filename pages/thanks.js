@@ -7,6 +7,8 @@ import clientPromise from "@/util/mongodb";
 import Layout from "@/components/Layout";
 
 export default function ThanksPage({ users }) {
+  console.log(users);
+
   const { user, handleChangeUser } = useContext(DroneDeliveryContext);
   useEffect(() => {
     // Clear out data in context

@@ -12,14 +12,14 @@ export default function VerifyPage() {
 
   useEffect(() => {
     // If no user exists in context is empty, go back to home page
-    if (Object.keys(user).length === 0 || user.name === "") {
+    if (Object.keys(userData).length === 0 || userData.name === "") {
       router.push("/");
     }
   }, []);
 
   async function createUser(user) {
     const data = await fetch(
-      `http://localhost:3000/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}`
+      `http://localhost:3000/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}&verified=true`
     );
     const res = await data.json();
     console.log(res);
@@ -29,7 +29,7 @@ export default function VerifyPage() {
     e.preventDefault();
 
     // Put user data from context into db
-    createUser(user);
+    createUser(userData);
     // Redirect to the thanks page
     router.push("/thanks");
   }
@@ -48,9 +48,10 @@ export default function VerifyPage() {
       </Head>
       <div className="mt-32">
         <p className="text-center">
-          {user.name} please verify that <br />
+          {userData.name} please verify that <br />
           <span className="border border-green-500 bg-green-100 text-green-800 rounded-md px-1">
-            {user.street}, {user.city}, {user.state} {user.zipcode}
+            {userData.street}, {userData.city}, {userData.state}{" "}
+            {userData.zipcode}
           </span>
           <br />
           is your correct address.

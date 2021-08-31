@@ -17,7 +17,7 @@ export default function Form() {
   });
   const [error, setError] = useState("");
 
-  const { user, handleChangeUser } = useContext(DroneDeliveryContext);
+  const { userData, handleChangeUser } = useContext(DroneDeliveryContext);
 
   async function searchUserByName(user) {
     const data = await fetch(
@@ -52,7 +52,7 @@ export default function Form() {
       zipcode: values.zipcode,
     });
     // Redirect to verify page
-    // router.push("/verify");
+    router.push("/verify");
   }
 
   return (

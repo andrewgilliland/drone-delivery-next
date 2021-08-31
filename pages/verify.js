@@ -50,7 +50,7 @@ export default function VerifyPage() {
 
         <div className="flex gap-5">
           <Button handleSubmit={verifiedSubmit}>Verify</Button>
-          <Button handleSubmit={unVerifiedSubmit}>This is Incorrect</Button>
+          <Button color="red" handleSubmit={unVerifiedSubmit}>This is Incorrect</Button>
         </div>
     </Layout>
   );

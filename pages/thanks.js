@@ -1,9 +1,18 @@
+import { useEffect, useContext } from "react";
 import Head from "next/head";
+
+import { DroneDeliveryContext } from "@/context/Context";
 
 import clientPromise from "@/util/mongodb";
 import Layout from "@/components/Layout";
 
 export default function ThanksPage({ users }) {
+  const { user, handleChangeUser } = useContext(DroneDeliveryContext);
+  useEffect(() => {
+    // Clear out data in context
+    handleChangeUser({});
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -12,26 +21,21 @@ export default function ThanksPage({ users }) {
       </Head>
 
       <div className="flex flex-col items-center mt-32">
-        <h1 className="text-3xl">Drone Delivery</h1>
-        <p>Thanks for signing up!</p>
+        <h1 className="text-3xl">Thanks for signing up!</h1>
       </div>
-      <div className="mt-5 text-center">
-        <h2 className="text-xl">Join our list of happy customers!</h2>
-        {users.map((user) => {
-          return <div key={user._id}>{user.name}</div>;
-        })}
-      </div>
+      <section className="mt-10 text-center">
+        <h2 className="text-xl">Join our list of happy customers</h2>
+        <div className="border border-gray-100 shadow-md p-5 rounded-sm mt-5">
+          {users.map((user) => {
+            return <div key={user._id}>{user.name}</div>;
+          })}
+        </div>
+      </section>
     </Layout>
   );
 }
 
 export async function getServerSideProps(context) {
-  // client.db() will be the default database passed in the MONGODB_URI
-  // You can change the database by calling the client.db() function and specifying a database like:
-  // const db = client.db("myDatabase");
-  // Then you can execute queries against your database like so:
-  // db.find({}) or any of the MongoDB Node Driver commands
-
   const client = await clientPromise;
   const db = client.db("drone-delivery");
   const data = await db.collection("users").find({}).limit(20).toArray();

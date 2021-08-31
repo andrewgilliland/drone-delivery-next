@@ -1,17 +1,16 @@
 import Head from "next/head";
-// import Header from "@components/Header";
-// import Footer from "@components/Footer";
+import Header from "@/components/Header";
 
 const Layout = ({ children}) => {
   
 
   return (
-    <div className="mt-10">
+    <div className="">
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Header /> */}
-      <main className="flex flex-col justify-center items-center h-full">{children}</main>
+      <Header />
+      <main className="mt-5 flex flex-col justify-center items-center h-full">{children}</main>
       {/* <Footer /> */}
     </div>
   );

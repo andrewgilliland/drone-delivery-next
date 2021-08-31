@@ -1,7 +1,8 @@
 import Head from "next/head";
 
-import Form from "../components/Form";
-import clientPromise from "../util/mongodb";
+import Layout from "@/components/Layout";
+import Form from "@/components/Form";
+import clientPromise from "@/util/mongodb";
 
 export default function Home({ isConnected }) {
   if (isConnected) {
@@ -9,10 +10,9 @@ export default function Home({ isConnected }) {
   }
 
   return (
-    <div className="container">
+    <Layout>
       <Head>
         <title>Drone Delivery</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
@@ -179,7 +179,7 @@ export default function Home({ isConnected }) {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
+    </Layout>
   );
 }
 

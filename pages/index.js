@@ -23,11 +23,7 @@ export default function Home({ isConnected }) {
           </p>
         </div>
         <Form />
-        <div>
-          <p className="hidden bg-red-100 text-red-500 px-4 py-1 rounded-full mt-5 border border-red-500">
-            Error message here!
-          </p>
-        </div>
+        
       </main>
 
       <style jsx global>{`

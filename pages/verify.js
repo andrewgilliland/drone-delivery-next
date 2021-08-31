@@ -8,7 +8,7 @@ import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 
 export default function VerifyPage() {
-  const { user, handleChangeUser } = useContext(DroneDeliveryContext);
+  const { userData, handleChangeUser } = useContext(DroneDeliveryContext);
 
   useEffect(() => {
     // If no user exists in context is empty, go back to home page

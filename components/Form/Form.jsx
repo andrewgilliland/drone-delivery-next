@@ -15,17 +15,30 @@ export default function Form() {
     state: "",
     zipcode: "",
   });
+  const [error, setError] = useState("");
 
   const { user, handleChangeUser } = useContext(DroneDeliveryContext);
 
-  function handleSubmit(e) {
+  async function searchUserByName(user) {
+    const data = await fetch(
+      `http://localhost:3000/api/search?term=${user.name}`
+    );
+    const res = await data.json();
+    return res;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
     // 1. Check db to see if user exists
-    // MongoDB Atlas Search 1:02:47
-    
-    // If user exists, display error message and exit
-    // Else
+    const searchVal = await searchUserByName(values);
 
+    // If user exists, display error message and exit
+    if (Object.keys(searchVal).length === 1) {
+      setError(`The user with this name has already signed up!`);
+      return;
+    }
+    // Else
+    setError("");
     // 2. Verify address with API
 
     // 3. Geocode address with API
@@ -39,15 +52,11 @@ export default function Form() {
       zipcode: values.zipcode,
     });
     // Redirect to verify page
-    router.push("/verify");
+    // router.push("/verify");
   }
 
   return (
-    <form
-      className="flex flex-col border border-gray-100 shadow-md p-5 rounded-sm mt-5"
-    >
-     
-
+    <form className="flex flex-col border border-gray-100 shadow-md p-5 rounded-sm mt-5">
       <label htmlFor="name">Name</label>
       <input
         className="bg-gray-100 rounded-md px-2 py-1"
@@ -98,6 +107,11 @@ export default function Form() {
           onChange={updateValue}
           max={16}
         />
+      </div>
+      <div>
+        <p className={`${error ? "bg-red-100 text-sm text-red-500 text-center px-4 py-1 rounded-full mt-5 border border-red-500" : "hidden"}`}>
+          {error}
+        </p>
       </div>
       <Button handleSubmit={handleSubmit}>Get Started</Button>
     </form>

@@ -1,5 +1,7 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
+
+import Form from "../components/Form";
+import clientPromise from "../util/mongodb";
 
 export default function Home({ isConnected }) {
   if (isConnected) {
@@ -14,9 +16,19 @@ export default function Home({ isConnected }) {
       </Head>
 
       <main>
-        <h1 className="title">Drone Delivery</h1>
+        <div className="flex flex-col items-center">
+          <h1 className="text-3xl">Drone Delivery</h1>
+          <p className="mt-2">
+            Get started with our new drone delivery service today!
+          </p>
+        </div>
+        <Form />
+        <div>
+          <p className="hidden bg-red-100 text-red-500 px-4 py-1 rounded-full mt-5 border border-red-500">
+            Error message here!
+          </p>
+        </div>
       </main>
-
 
       <style jsx>{`
         .container {
@@ -29,7 +41,7 @@ export default function Home({ isConnected }) {
         }
 
         main {
-          padding: 5rem 0;
+          padding: 1rem 0;
           flex: 1;
           display: flex;
           flex-direction: column;

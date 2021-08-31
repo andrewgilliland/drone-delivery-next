@@ -26,7 +26,7 @@ export default function Form() {
 
     // 2. Verify address with API
 
-    // 3. Geocode address with Mapbox API
+    // 3. Geocode address with API
 
     // 4. Put User data into context
     handleChangeUser({

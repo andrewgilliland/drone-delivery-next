@@ -37,21 +37,23 @@ export default function VerifyPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
-        <div>
-          <p>
-            {user.name} please verify that{" "}
-            <span className="border border-green-500 bg-green-100 text-green-800 rounded-md px-1">
-              {user.street}, {user.city}, {user.state} {user.zipcode}
-            </span>
-            is your correct address.
-          </p>
-        </div>
+      <div className="mt-32">
+        <p className="text-center">
+          {user.name} please verify that <br />
+          <span className="border border-green-500 bg-green-100 text-green-800 rounded-md px-1">
+            {user.street}, {user.city}, {user.state} {user.zipcode}
+          </span>
+          <br />
+          is your correct address.
+        </p>
+      </div>
 
-        <div className="flex gap-5">
-          <Button handleSubmit={verifiedSubmit}>Verify</Button>
-          <Button color="red" handleSubmit={unVerifiedSubmit}>This is Incorrect</Button>
-        </div>
+      <div className="flex gap-5">
+        <Button handleSubmit={verifiedSubmit}>Verify</Button>
+        <Button color="red" handleSubmit={unVerifiedSubmit}>
+          This is Incorrect
+        </Button>
+      </div>
     </Layout>
   );
 }

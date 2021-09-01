@@ -31,8 +31,6 @@ export default function Form() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // Update Context
-
     // 0. Check to see if any inputs are left blank
     if (values.name === "") {
       setError(`Please enter your name on the form`);
@@ -77,9 +75,7 @@ export default function Form() {
 
     // 2. Verify address with API
     const validAddress = await isAddressValid(values);
-    console.log(validAddress);
     if (!validAddress) {
-      console.log("address isn't valid");
       setError(`The address entered is not valid!`);
       return;
     }
@@ -101,9 +97,8 @@ export default function Form() {
       geocode: geocode,
     });
    
-    console.log(userData);
     // 5. Redirect to verify page
-    // router.push("/verify");
+    router.push("/verify");
   }
 
   return (

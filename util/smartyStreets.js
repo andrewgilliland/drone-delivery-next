@@ -1,5 +1,7 @@
 const SmartyStreetsSDK = require("smartystreets-javascript-sdk");
 
+import abbrState from "@/util/stateToAbbr";
+
 export async function isAddressValid(user) {
   const SmartyStreetsCore = SmartyStreetsSDK.core;
   const Lookup = SmartyStreetsSDK.usStreet.Lookup;
@@ -30,23 +32,24 @@ export async function isAddressValid(user) {
   function handleSuccess(response) {
     // analysis.dpvMatchCode = "N"
     const validAddress = lookup.result[0].analysis.dpvMatchCode;
-    console.log(lookup.result);
-
     // const cityName = lookup.result[0].components.cityName;
     const { cityName, state, zipCode } = lookup.result[0].components;
-    console.log(cityName, state, zipCode);
 
-    if (cityName !== user.city) {
-      console.log("Cities don't match");
-      return false;
-    }
-    if (state !== user.state) {
-      console.log("State don't match");
+    if (cityName.toUpperCase() !== user.city.toUpperCase()) {
       return false;
     }
 
-    if (zipCode !== user.zipCode) {
-      console.log("Zipcodes don't match");
+    let abbreviatedState = user.state;
+    // If state name is not abbreviated, run this function
+    if (user.state.length > 2) {
+      abbreviatedState = abbrState(user.state, "abbr");
+    }
+
+    if (state !== abbreviatedState) {
+      return false;
+    }
+
+    if (zipCode !== user.zipcode) {
       return false;
     }
 

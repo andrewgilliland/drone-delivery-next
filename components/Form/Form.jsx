@@ -4,6 +4,8 @@ import router from "next/router";
 import { DroneDeliveryContext } from "@/context/Context";
 
 import useForm from "@/util/hooks/useForm";
+import smartyStreets from "@/util/smartyStreets";
+import { getGeoCodeFromAddress } from "@/util/geocode";
 import Button from "@/components/Button";
 
 export default function Form() {
@@ -16,11 +18,13 @@ export default function Form() {
   });
   const [error, setError] = useState("");
 
+  // smartyStreets();
+
   const { userData, handleChangeUser } = useContext(DroneDeliveryContext);
 
   async function searchUserByName(user) {
     const data = await fetch(
-      `https://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
+      `http://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
     );
     const res = await data.json();
     return res;
@@ -36,11 +40,22 @@ export default function Form() {
       setError(`The user with this name has already signed up!`);
       return;
     }
+
     // Else
     setError("");
     // 2. Verify address with API
+    // Take data returned from API and create boolean
+    // If "unverified" set new Error Message and return
+    // if (Object.keys(searchVal).length === 1) {
+    //   setError(`This is not a verified address!`);
+    //   return;
+    // }
 
+    // Else
     // 3. Geocode address with API
+    const addressString = `${values.street}, ${values.city}, ${values.state} ${values.zipcode}`;
+    const geocode = getGeoCodeFromAddress(addressString);
+    console.log(geocode);
 
     // 4. Put User data into context
     handleChangeUser({

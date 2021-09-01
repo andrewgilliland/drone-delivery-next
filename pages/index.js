@@ -4,10 +4,14 @@ import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import clientPromise from "@/util/mongodb";
 
+import Geocode from "react-geocode";
+
 export default function Home({ isConnected }) {
   if (isConnected) {
     console.log(`🚀 Connected to MongoDB!!!`);
   }
+
+  // Geocode.setApiKey(process.env.NEXT_PUBLIC_GCP_MAPS_API_KEY);
 
   return (
     <Layout>
@@ -23,7 +27,6 @@ export default function Home({ isConnected }) {
           </p>
         </div>
         <Form />
-        
       </main>
 
       <style jsx global>{`

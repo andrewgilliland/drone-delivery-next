@@ -12,7 +12,7 @@ export default function smartyStreets() {
   // can be found on the Subscription page of the account dashboard.
   // https://www.smartystreets.com/docs/cloud/licensing
   let clientBuilder = new SmartyStreetsCore.ClientBuilder(credentials)
-    .withBaseUrl("/")
+    // .withBaseUrl("/")
     .withLicenses(["us-core-cloud"]);
   let client = clientBuilder.buildUsStreetApiClient();
 

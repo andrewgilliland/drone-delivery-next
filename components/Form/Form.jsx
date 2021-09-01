@@ -32,6 +32,8 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    // 0. Check to see if any inputs are left blank
+
     // 1. Check db to see if user exists
     const searchVal = await searchUserByName(values);
 
@@ -43,6 +45,7 @@ export default function Form() {
 
     // Else
     setError("");
+
     // 2. Verify address with API
     // Take data returned from API and create boolean
     // If "unverified" set new Error Message and return
@@ -75,7 +78,7 @@ export default function Form() {
   }
 
   return (
-    <form className="flex flex-col border border-gray-100 shadow-md p-5 rounded-sm mt-5">
+    <form className="relative bg-white flex flex-col border border-gray-100 shadow-md p-5 rounded-sm mt-5">
       <label htmlFor="name">Name</label>
       <input
         className="bg-gray-100 rounded-md px-2 py-1"

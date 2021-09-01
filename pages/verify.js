@@ -12,9 +12,9 @@ export default function VerifyPage() {
 
   useEffect(() => {
     // If no user exists in context is empty, go back to home page
-    // if (Object.keys(userData).length === 0 || userData.name === "") {
-    //   router.push("/");
-    // }
+    if (Object.keys(userData).length === 0 || userData.name === "") {
+      router.push("/");
+    }
   }, []);
 
   async function createUser(user) {

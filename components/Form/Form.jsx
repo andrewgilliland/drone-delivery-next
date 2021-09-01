@@ -17,6 +17,7 @@ export default function Form() {
     zipcode: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { userData, handleChangeUser } = useContext(DroneDeliveryContext);
 
@@ -30,26 +31,32 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     // 0. Check to see if any inputs are left blank
     if (values.name === "") {
       setError(`Please enter your name on the form`);
+      setLoading(false);
       return;
     }
     if (values.street === "") {
       setError(`Please enter your street address on the form`);
+      setLoading(false);
       return;
     }
     if (values.city === "") {
       setError(`Please enter your city on the form`);
+      setLoading(false);
       return;
     }
     if (values.state === "") {
       setError(`Please enter your state on the form`);
+      setLoading(false);
       return;
     }
     if (values.zipcode === "") {
       setError(`Please enter your zipcode on the form`);
+      setLoading(false);
       return;
     }
     // let userArray = Object.entries(userData);
@@ -68,6 +75,7 @@ export default function Form() {
     // If user exists, display error message and exit
     if (Object.keys(searchVal).length === 1) {
       setError(`The user with this name has already signed up!`);
+      setLoading(false);
       return;
     }
     // Else
@@ -77,6 +85,7 @@ export default function Form() {
     const validAddress = await isAddressValid(values);
     if (!validAddress) {
       setError(`The address entered is not valid!`);
+      setLoading(false);
       return;
     }
     console.log("address IS valid");
@@ -96,7 +105,7 @@ export default function Form() {
       zipcode: values.zipcode,
       geocode: geocode,
     });
-   
+
     // 5. Redirect to verify page
     router.push("/verify");
   }
@@ -165,7 +174,9 @@ export default function Form() {
           {error}
         </p>
       </div>
-      <Button handleSubmit={handleSubmit}>Get Started</Button>
+      <Button handleSubmit={handleSubmit}>
+        {loading ? "Loading..." : "Get Started"}
+      </Button>
     </form>
   );
 }

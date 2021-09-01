@@ -4,14 +4,10 @@ import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import clientPromise from "@/util/mongodb";
 
-import smartyStreets from "@/util/smartyStreets";
-
 export default function Home({ isConnected }) {
   if (isConnected) {
     console.log(`🚀 Connected to MongoDB!!!`);
   }
-
-  smartyStreets();
 
   return (
     <Layout>

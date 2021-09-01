@@ -1,6 +1,6 @@
 const SmartyStreetsSDK = require("smartystreets-javascript-sdk");
 
-export default function smartyStreets() {
+export async function isAddressValid(user) {
   const SmartyStreetsCore = SmartyStreetsSDK.core;
   const Lookup = SmartyStreetsSDK.usStreet.Lookup;
 
@@ -16,28 +16,45 @@ export default function smartyStreets() {
     .withLicenses(["us-core-cloud"]);
   let client = clientBuilder.buildUsStreetApiClient();
 
-  // Documentation for input fields can be found at:
-  // https://smartystreets.com/docs/us-street-api#input-fields
+  let lookup = new Lookup();
+  lookup.street = user.street;
+  lookup.city = user.city;
+  lookup.state = user.state;
+  lookup.zipCode = user.zipcode;
+  lookup.maxCandidates = 3;
+  lookup.match = "invalid";
 
-  let lookup1 = new Lookup();
-  lookup1.inputId = "24601"; // Optional ID from your system
-  lookup1.addressee = "John Doe";
-  lookup1.street = "330 N 100 W";
-  lookup1.street2 = "closet under the stairs";
-  lookup1.secondary = "APT 2";
-  lookup1.urbanization = ""; // Only applies to Puerto Rico addresses
-  lookup1.city = "Provo";
-  lookup1.state = "Utah";
-  lookup1.zipCode = "84601";
-  lookup1.maxCandidates = 3;
-  lookup1.match = "invalid"; // "invalid" is the most permissive match,
-  // this will always return at least one result even if the address is invalid.
-  // Refer to the documentation for additional MatchStrategy options.
-
-  client.send(lookup1).then(handleSuccess).catch(handleError);
+  const val1 = await client.send(lookup).then(handleSuccess).catch(handleError);
+  return val1;
 
   function handleSuccess(response) {
-    console.log(lookup1.result);
+    // analysis.dpvMatchCode = "N"
+    const validAddress = lookup.result[0].analysis.dpvMatchCode;
+    console.log(lookup.result);
+
+    // const cityName = lookup.result[0].components.cityName;
+    const { cityName, state, zipCode } = lookup.result[0].components;
+    console.log(cityName, state, zipCode);
+
+    if (cityName !== user.city) {
+      console.log("Cities don't match");
+      return false;
+    }
+    if (state !== user.state) {
+      console.log("State don't match");
+      return false;
+    }
+
+    if (zipCode !== user.zipCode) {
+      console.log("Zipcodes don't match");
+      return false;
+    }
+
+    if (validAddress === "N") {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   function handleError(response) {

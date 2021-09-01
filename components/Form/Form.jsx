@@ -4,7 +4,7 @@ import router from "next/router";
 import { DroneDeliveryContext } from "@/context/Context";
 
 import useForm from "@/util/hooks/useForm";
-import smartyStreets from "@/util/smartyStreets";
+import { isAddressValid } from "@/util/smartyStreets";
 import { getGeoCodeFromAddress } from "@/util/geocode";
 import Button from "@/components/Button";
 
@@ -18,8 +18,6 @@ export default function Form() {
   });
   const [error, setError] = useState("");
 
-  // smartyStreets();
-
   const { userData, handleChangeUser } = useContext(DroneDeliveryContext);
 
   async function searchUserByName(user) {
@@ -32,7 +30,39 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Update Context
+
     // 0. Check to see if any inputs are left blank
+    if (values.name === "") {
+      setError(`Please enter your name on the form`);
+      return;
+    }
+    if (values.street === "") {
+      setError(`Please enter your street address on the form`);
+      return;
+    }
+    if (values.city === "") {
+      setError(`Please enter your city on the form`);
+      return;
+    }
+    if (values.state === "") {
+      setError(`Please enter your state on the form`);
+      return;
+    }
+    if (values.zipcode === "") {
+      setError(`Please enter your zipcode on the form`);
+      return;
+    }
+    // let userArray = Object.entries(userData);
+    // await userArray.map((prop) => {
+    //   console.log(prop[1]);
+    //   if (prop[1] === "") {
+    //     console.log(`${prop[0]} is an empty string`);
+    //     setError(`Please enter the your ${prop[0]} on the form`);
+    //     return;
+    //   }
+    // });
 
     // 1. Check db to see if user exists
     const searchVal = await searchUserByName(values);
@@ -42,24 +72,26 @@ export default function Form() {
       setError(`The user with this name has already signed up!`);
       return;
     }
-
     // Else
     setError("");
 
     // 2. Verify address with API
-    // Take data returned from API and create boolean
-    // If "unverified" set new Error Message and return
-    // if (Object.keys(searchVal).length === 1) {
-    //   setError(`This is not a verified address!`);
-    //   return;
-    // }
+    const validAddress = await isAddressValid(values);
+    console.log(validAddress);
+    if (!validAddress) {
+      console.log("address isn't valid");
+      setError(`The address entered is not valid!`);
+      return;
+    }
+    console.log("address IS valid");
+    setError("");
 
     // Else
     // 3. Geocode address with API
     const addressString = `${values.street}, ${values.city}, ${values.state} ${values.zipcode}`;
     const geocode = await getGeoCodeFromAddress(addressString);
 
-    // 4. Put User data into context
+    // 4. Add geocode data into context
     handleChangeUser({
       name: values.name,
       street: values.street,
@@ -68,13 +100,10 @@ export default function Form() {
       zipcode: values.zipcode,
       geocode: geocode,
     });
-
-    // const geocodeObject
-    // const geo = Object.entries(geocode);
-    // console.log(geo);
-
+   
+    console.log(userData);
     // 5. Redirect to verify page
-    router.push("/verify");
+    // router.push("/verify");
   }
 
   return (

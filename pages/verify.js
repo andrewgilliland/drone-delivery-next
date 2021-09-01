@@ -64,7 +64,7 @@ export default function VerifyPage() {
           </div>
           <div className="flex gap-5">
             <Button handleSubmit={verifiedSubmit}>Verify</Button>
-            <Button color="red" handleSubmit={unVerifiedSubmit}>
+            <Button secondary={true} handleSubmit={unVerifiedSubmit}>
               This is Incorrect
             </Button>
           </div>

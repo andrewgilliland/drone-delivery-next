@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import router from "next/router";
-// import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
 import { DroneDeliveryContext } from "@/context/Context";
 
@@ -21,7 +20,7 @@ export default function Form() {
 
   async function searchUserByName(user) {
     const data = await fetch(
-      `http://localhost:3000/api/search?term=${user.name}`
+      `http://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
     );
     const res = await data.json();
     return res;
@@ -109,7 +108,13 @@ export default function Form() {
         />
       </div>
       <div>
-        <p className={`${error ? "bg-red-100 text-sm text-red-500 text-center px-4 py-1 rounded-full mt-5 border border-red-500" : "hidden"}`}>
+        <p
+          className={`${
+            error
+              ? "bg-red-100 text-sm text-red-500 text-center px-4 py-1 rounded-full mt-5 border border-red-500"
+              : "hidden"
+          }`}
+        >
           {error}
         </p>
       </div>

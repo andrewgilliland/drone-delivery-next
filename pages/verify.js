@@ -19,10 +19,9 @@ export default function VerifyPage() {
 
   async function createUser(user) {
     const data = await fetch(
-      `http://localhost:3000/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}&verified=true`
+      `http://${process.env.NEXT_PUBLIC_URL}/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}&verified=true`
     );
     const res = await data.json();
-    console.log(res);
   }
 
   function verifiedSubmit(e) {

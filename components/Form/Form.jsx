@@ -24,7 +24,7 @@ export default function Form() {
 
   async function searchUserByName(user) {
     const data = await fetch(
-      `http://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
+      `http${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
     );
     const res = await data.json();
     return res;
@@ -55,7 +55,6 @@ export default function Form() {
     // 3. Geocode address with API
     const addressString = `${values.street}, ${values.city}, ${values.state} ${values.zipcode}`;
     const geocode = await getGeoCodeFromAddress(addressString);
-    console.log(geocode);
 
     // 4. Put User data into context
     handleChangeUser({
@@ -66,8 +65,13 @@ export default function Form() {
       zipcode: values.zipcode,
       geocode: geocode,
     });
-    // Redirect to verify page
-    // router.push("/verify");
+
+    // const geocodeObject
+    // const geo = Object.entries(geocode);
+    // console.log(geo);
+
+    // 5. Redirect to verify page
+    router.push("/verify");
   }
 
   return (

@@ -19,7 +19,7 @@ export default function VerifyPage() {
 
   async function createUser(user) {
     const data = await fetch(
-      `https://${process.env.NEXT_PUBLIC_URL}/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}&verified=true`
+      `http${process.env.NEXT_PUBLIC_URL}/api/createUser?name=${user.name}&street=${user.street}&city=${user.city}&state=${user.state}&zipcode=${user.zipcode}&lat=${user.geocode.lat}&lng=${user.geocode.lng}&verified=true`
     );
     const res = await data.json();
   }

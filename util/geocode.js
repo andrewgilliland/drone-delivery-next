@@ -82,7 +82,6 @@ export async function getGeoCodeFromAddress(address) {
   await Geocode.fromAddress(address).then(
     (response) => {
       const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
       geocode = { lat, lng };
     },
     (error) => {

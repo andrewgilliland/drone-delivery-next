@@ -54,7 +54,7 @@ export default function Form() {
     // Else
     // 3. Geocode address with API
     const addressString = `${values.street}, ${values.city}, ${values.state} ${values.zipcode}`;
-    const geocode = getGeoCodeFromAddress(addressString);
+    const geocode = await getGeoCodeFromAddress(addressString);
     console.log(geocode);
 
     // 4. Put User data into context
@@ -64,9 +64,10 @@ export default function Form() {
       city: values.city,
       state: values.state,
       zipcode: values.zipcode,
+      geocode: geocode,
     });
     // Redirect to verify page
-    router.push("/verify");
+    // router.push("/verify");
   }
 
   return (

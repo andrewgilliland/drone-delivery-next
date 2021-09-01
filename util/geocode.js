@@ -77,16 +77,17 @@ Geocode.enableDebug();
 //   }
 // );
 
-export function getGeoCodeFromAddress(address) {
-  Geocode.fromAddress(address).then(
+export async function getGeoCodeFromAddress(address) {
+  let geocode;
+  await Geocode.fromAddress(address).then(
     (response) => {
       const { lat, lng } = response.results[0].geometry.location;
       console.log(lat, lng);
-      const geocode = { lat, lng };
-      return lat;
+      geocode = { lat, lng };
     },
     (error) => {
       console.error(error);
     }
   );
+  return geocode;
 }

@@ -12,12 +12,12 @@ export default function Home({ isConnected }) {
   return (
     <Layout>
       <Head>
-        <title>Drone Delivery</title>
+        <title>Drone Drop Delivery</title>
       </Head>
 
       <div>
         <section className="flex flex-col items-center text-center px-4">
-          <h1 className="text-3xl">Drone Delivery</h1>
+          <h1 className="text-3xl">Drone Drop Delivery</h1>
           <p className="mt-2">
             Get started with our new drone delivery service today!
           </p>

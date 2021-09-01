@@ -5,7 +5,7 @@ const Header = () => {
     <header className="bg-purple-500 px-20 py-4 shadow-md">
       <Link href="/">
         <a>
-          <div className="font-semibold text-gray-100 text-lg">Drone Delivery</div>
+          <div className="font-semibold text-gray-100 text-lg">Drone Drop Delivery</div>
         </a>
       </Link>
     </header>

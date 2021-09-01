@@ -20,7 +20,7 @@ export default function Form() {
 
   async function searchUserByName(user) {
     const data = await fetch(
-      `http://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
+      `https://${process.env.NEXT_PUBLIC_URL}/api/search?term=${user.name}`
     );
     const res = await data.json();
     return res;
